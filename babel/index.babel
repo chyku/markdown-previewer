@@ -1,0 +1,35 @@
+var defaultText = '# Header 1\n\n## Header 2\n\n And so on!\n\nYou can use *italics* (_italics_) or **bold** (__bold__), or __*both*__ at the same time!\n\nOr even [links](https://guides.github.com/features/mastering-markdown/) and\n\n* Unordered\n - lists\n\nand\n\n1. Ordered lists!'
+
+document.getElementById('display').innerHTML =
+      marked(defaultText);
+
+class InputBox extends React.Component {
+  // some code from https://facebook.github.io/react/docs/forms.html
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: defaultText};
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    document.getElementById('display').innerHTML =
+      marked(event.target.value);
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <textarea name="Text1" value={this.state.value} onChange={this.handleChange} />
+      </form>
+    );
+  }
+}
+
+ReactDOM.render(<InputBox />, document.getElementById("input"));
+
+// rendering display:
+// return <div dangerouslySetInnerHTML={{__html: 
+//    marked(this.state.value)}}></div>;
